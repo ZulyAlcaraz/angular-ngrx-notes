@@ -43,6 +43,8 @@
         ]
       }
     ],
+    "variable-name": false,
+    "no-empty-interface": false,
     "no-consecutive-blank-lines": false,
     "no-console": [
       true,
