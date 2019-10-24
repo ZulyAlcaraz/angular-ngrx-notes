@@ -1,7 +1,10 @@
 .color-list {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
     .mat-list-option {
-        margin: 1rem;
+        flex: 1;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
     }
 }
