@@ -5,12 +5,18 @@ import { HomeComponent } from './home.component';
 const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('../note/note.module').then(m => m.NoteModule)
+            }
+        ]
     }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

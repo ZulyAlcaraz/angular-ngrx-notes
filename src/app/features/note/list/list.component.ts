@@ -1,25 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
+import * as fromNote from '../store/note.reducer';
 import { NoteStoreService } from '../store/note-store.service';
 
 @Component({
-  selector: 'app-notes-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+    selector: 'app-notes-list',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
-  constructor(private noteStoreService: NoteStoreService) {}
+export class ListComponent implements OnInit, OnDestroy {
+    private ngUnsubscribe$ = new Subject();
+    list: fromNote.Note[];
 
-  ngOnInit() {
-    this.noteStoreService.getList().subscribe(list => {
-      console.log('Pepe', list);
-    });
-  }
+    constructor(
+        private readonly noteStoreService: NoteStoreService,
+        private readonly router: Router
+    ) {}
 
-  addNote() {
-    this.noteStoreService.addNote({
-      title: 'Test 1',
-      content: 'Test Content',
-      id: '1'
-    });
-  }
+    ngOnInit(): void {
+        this.noteStoreService
+            .getList()
+            .pipe(takeUntil(this.ngUnsubscribe$))
+            .subscribe(list => this.list = list);
+    }
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe$.next();
+        this.ngUnsubscribe$.complete();
+    }
+
+    addNote(): void {
+        this.router.navigate(['create']);
+    }
+
+    deleteNote(id: string): void {
+        this.noteStoreService.deleteNote(id);
+    }
 }

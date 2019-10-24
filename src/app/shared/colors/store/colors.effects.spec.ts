@@ -2,21 +2,21 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of } from 'rxjs';
 
-import { NoteEffects } from './note.effects';
+import { ColorsEffects } from './colors.effects';
 
-describe('NoteEffects', () => {
+describe('ColorsEffects', () => {
   const actions$: Observable<any> = of([]);
-  let effects: NoteEffects;
+  let effects: ColorsEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NoteEffects,
+        ColorsEffects,
         provideMockActions(() => actions$)
       ]
     });
 
-    effects = TestBed.get<NoteEffects>(NoteEffects);
+    effects = TestBed.get<ColorsEffects>(ColorsEffects);
   });
 
   it('should be created', () => {
