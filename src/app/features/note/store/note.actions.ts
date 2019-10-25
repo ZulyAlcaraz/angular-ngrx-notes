@@ -3,12 +3,12 @@ import { Note } from './note.reducer';
 
 export enum NoteActionTypes {
     LoadNotes = '[Note] Load Notes',
+    LoadNotesSuccess = '[Note] LoadNotesSuccess',
+    LoadNotesFailure = '[Note] LoadNotesFailure',
     AddNote = '[Note] AddNote',
     DeleteNote = '[Note] DeleteNote',
     EditNote = '[Note] EditNote',
     GetNote = '[Note] GetNote',
-    LoadNotesSuccess = '[Note] LoadNotesSuccess',
-    LoadNotesFailure = '[Note] LoadNotesFailure'
 }
 
 export class LoadNotes implements Action {
@@ -44,11 +44,4 @@ export class DeleteNote implements Action {
     constructor(public id: string) {}
 }
 
-export type NoteActions =
-    | LoadNotes
-    | AddNote
-    | DeleteNote
-    | EditNote
-    | GetNote
-    | LoadNotesSuccess
-    | LoadNotesFailure;
+export type NoteActions = LoadNotes | AddNote | DeleteNote | EditNote | GetNote | LoadNotesSuccess | LoadNotesFailure;

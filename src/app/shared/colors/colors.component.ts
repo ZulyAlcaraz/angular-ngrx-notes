@@ -18,8 +18,7 @@ import { BaseMatFormFieldControlComponent } from '../base-mat-form-field-control
         }
     ]
 })
-export class ColorsComponent extends BaseMatFormFieldControlComponent<any>
-    implements OnInit, OnDestroy {
+export class ColorsComponent extends BaseMatFormFieldControlComponent<any> implements OnInit, OnDestroy {
     colors: string[] = [];
 
     private _value: string;

@@ -1,25 +1,31 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 import { ListComponent } from './list.component';
+import { NoteStoreService } from '../store/note-store.service';
+import { MaterialModule } from 'src/app/material.module';
 
 describe('ListComponent', () => {
-  let component: ListComponent;
-  let fixture: ComponentFixture<ListComponent>;
+    let spectator: Spectator<ListComponent>;
+    const createComponent = createComponentFactory({
+        component: ListComponent,
+        mocks: [Router],
+        providers: [
+            {
+                provide: NoteStoreService,
+                useValue: {
+                    getList: () => of([]),
+                    loadNotes: () => {}
+                }
+            }
+        ],
+        imports: [MaterialModule]
+    });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ListComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(() => (spectator = createComponent()));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(spectator.component).toBeTruthy();
+    });
 });

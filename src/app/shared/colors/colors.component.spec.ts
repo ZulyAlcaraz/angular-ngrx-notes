@@ -1,25 +1,30 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
+import { of } from 'rxjs';
 
 import { ColorsComponent } from './colors.component';
+import { MaterialModule } from 'src/app/material.module';
+import { ColorsStoreService } from './store/colors-store.service';
 
 describe('ColorsComponent', () => {
-  let component: ColorsComponent;
-  let fixture: ComponentFixture<ColorsComponent>;
+    let spectator: Spectator<ColorsComponent>;
+    const createComponent = createComponentFactory({
+        component: ColorsComponent,
+        mocks: [],
+        providers: [
+            {
+                provide: ColorsStoreService,
+                useValue: {
+                    loadColors: () => {},
+                    getList: () => of([])
+                }
+            }
+        ],
+        imports: [MaterialModule]
+    });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ColorsComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(() => (spectator = createComponent()));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ColorsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(spectator.component).toBeTruthy();
+    });
 });

@@ -1,25 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { MainMenuComponent } from './main-menu.component';
+import { MaterialModule } from 'src/app/material.module';
 
 describe('MainMenuComponent', () => {
-  let component: MainMenuComponent;
-  let fixture: ComponentFixture<MainMenuComponent>;
+    let spectator: Spectator<MainMenuComponent>;
+    const createComponent = createComponentFactory({
+        component: MainMenuComponent,
+        imports: [MaterialModule, RouterTestingModule]
+    });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MainMenuComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(() => (spectator = createComponent()));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MainMenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(spectator.component).toBeTruthy();
+    });
 });
