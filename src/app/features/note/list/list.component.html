@@ -5,11 +5,14 @@
     </button>
 </mat-toolbar>
 
-<mat-list>
-    <mat-list-item [style.background]=note.color *ngFor="let note of list">
+<mat-list class="list">
+    <mat-list-item class="item" [style.background]=note.color *ngFor="let note of list">
         <mat-icon matListIcon>note</mat-icon>
         <h3 matLine> {{ note.title }} </h3>
         <p matLine>{{ note.content }}</p>
+        <button mat-icon-button (click)=editNote(note.id)>
+            <mat-icon>edit</mat-icon>
+        </button>
         <button mat-icon-button (click)=deleteNote(note.id)>
             <mat-icon>delete</mat-icon>
         </button>

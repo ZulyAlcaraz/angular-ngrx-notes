@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Effect, ofType, Actions } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { of, Observable } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
 
 import {
@@ -21,11 +22,13 @@ export class ColorsEffects {
         switchMap(() => this.getColors())
     );
 
-    getColors() {
+    getColors(): Observable<Action> {
         return this.http
             .get<{ colors: any }>('http://www.colr.org/json/colors/random/7')
             .pipe(
-                map(response => response.colors.filter(i => !!i.hex).map(i => `#${i.hex}`)),
+                map(response =>
+                    response.colors.filter(i => !!i.hex).map(i => `#${i.hex}`)
+                ),
                 map(colors => new LoadColorsSuccess(colors)),
                 catchError(err => of(new LoadColorsFailure()))
             );

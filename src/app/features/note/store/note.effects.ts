@@ -1,18 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
 
-import { concatMap, tap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { NoteActionTypes, NoteActions } from './note.actions';
+import { switchMap, concatMap } from 'rxjs/operators';
+import { Observable, of, EMPTY } from 'rxjs';
+import { NoteActionTypes, NoteActions, LoadNotesSuccess } from './note.actions';
 
 @Injectable()
 export class NoteEffects {
     @Effect()
     loadNotes$ = this.actions$.pipe(
         ofType(NoteActionTypes.LoadNotes),
-        /** An EMPTY observable only emits completion. Replace with your own observable API request */
         concatMap(() => EMPTY)
+        // switchMap(() => this.getNotes())
     );
 
     constructor(private actions$: Actions<NoteActions>) {}
+
+    // getNotes(): Observable<Action> {
+    //     return of(new LoadNotesSuccess([
+    //         {
+    //             id: '1',
+    //             title: 'Note 1',
+    //             content: 'This is a note',
+    //             color: '#ccc'
+    //         }
+    //     ]));
+    // }
 }

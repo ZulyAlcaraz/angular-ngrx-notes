@@ -4,15 +4,38 @@ import { Note } from './note.reducer';
 export enum NoteActionTypes {
     LoadNotes = '[Note] Load Notes',
     AddNote = '[Note] AddNote',
-    DeleteNote = '[Note] DeleteNote'
+    DeleteNote = '[Note] DeleteNote',
+    EditNote = '[Note] EditNote',
+    GetNote = '[Note] GetNote',
+    LoadNotesSuccess = '[Note] LoadNotesSuccess',
+    LoadNotesFailure = '[Note] LoadNotesFailure'
 }
 
 export class LoadNotes implements Action {
     readonly type = NoteActionTypes.LoadNotes;
 }
 
+export class LoadNotesSuccess implements Action {
+    readonly type = NoteActionTypes.LoadNotesSuccess;
+    constructor(public payload: Note[]) {}
+}
+
+export class LoadNotesFailure implements Action {
+    readonly type = NoteActionTypes.LoadNotesFailure;
+}
+
+export class GetNote implements Action {
+    readonly type = NoteActionTypes.GetNote;
+    constructor(public id: string) {}
+}
+
 export class AddNote implements Action {
     readonly type = NoteActionTypes.AddNote;
+    constructor(public payload: Note) {}
+}
+
+export class EditNote implements Action {
+    readonly type = NoteActionTypes.EditNote;
     constructor(public payload: Note) {}
 }
 
@@ -21,4 +44,11 @@ export class DeleteNote implements Action {
     constructor(public id: string) {}
 }
 
-export type NoteActions = LoadNotes | AddNote | DeleteNote;
+export type NoteActions =
+    | LoadNotes
+    | AddNote
+    | DeleteNote
+    | EditNote
+    | GetNote
+    | LoadNotesSuccess
+    | LoadNotesFailure;

@@ -21,10 +21,11 @@ export class ListComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
+        this.noteStoreService.loadNotes();
         this.noteStoreService
             .getList()
             .pipe(takeUntil(this.ngUnsubscribe$))
-            .subscribe(list => this.list = list);
+            .subscribe(list => (this.list = list));
     }
 
     ngOnDestroy(): void {
@@ -38,5 +39,9 @@ export class ListComponent implements OnInit, OnDestroy {
 
     deleteNote(id: string): void {
         this.noteStoreService.deleteNote(id);
+    }
+
+    editNote(id: string): void {
+        this.router.navigate(['edit', id]);
     }
 }
